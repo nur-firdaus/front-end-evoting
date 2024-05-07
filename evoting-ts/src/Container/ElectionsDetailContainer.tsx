@@ -8,18 +8,7 @@ interface Props {
   content: Voter[];
 }
 
-interface Election {
-  election_id: number;
-  title: string;
-  description: string;
-  start_date: string;
-  end_date: string;
-  is_active: number;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Voter {
+export interface Voter {
   voter_id: number;
   full_name: string;
   username: string;

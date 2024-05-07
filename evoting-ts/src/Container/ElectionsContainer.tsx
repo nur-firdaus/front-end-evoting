@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Table, Modal } from 'antd';
 import axios from 'axios';
 import ElectionsDetailContainer from './ElectionsDetailContainer';
+import ElectionsDetailContainerVoter from './ElectionsDetailContainerVoter';
 
 export interface Election {
   election_id: number;
@@ -18,6 +19,7 @@ const ElectionsContainer: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<any>(null);
+  const [role, setRole] = useState<string | null>(localStorage.getItem('Role'));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -81,22 +83,43 @@ const ElectionsContainer: React.FC = () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/elections/${election.election_id}/voters`);
       setModalContent(response.data);
+      localStorage.setItem("ElectionId", election.election_id.toLocaleString());
       setModalVisible(true);
     } catch (error) {
       console.error('Error fetching election details:', error);
     }
   };
 
+  
+  const handleOnCancel = async () => {
+    try {
+      setModalVisible(false);
+      localStorage.setItem("ElectionId", '');
+    } catch (error) {
+      console.error('Error fetching election details:', error);
+    }
+  };
+
   return (
+    <>
     <div>
       <h1>Election List</h1>
       <Table dataSource={elections} columns={columns} />
+      {role=='Admin'?(
       <ElectionsDetailContainer
         visible={modalVisible}
-        onCancel={() => setModalVisible(false)}
+        onCancel={() => handleOnCancel()}
         content={modalContent}
       />
+      ):(
+        <ElectionsDetailContainerVoter
+        visible={modalVisible}
+        onCancel={() => handleOnCancel()}
+        content={modalContent}
+      />
+      )}
     </div>
+    </>
   );
 };
 
