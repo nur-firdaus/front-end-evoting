@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import { Menu, Button, message } from 'antd';
 import { HomeOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 import LoginForm from './LoginContainer';
+import { useNavigate } from 'react-router-dom';
 
 const { SubMenu } = Menu;
 
 const NavBar: React.FC = () => {
   const [username, setUsername] = useState<string | null>(localStorage.getItem('username'));
+  const navigate = useNavigate();
 
   const updateUsername = (name: string) => {
     setUsername(name);
@@ -16,6 +18,7 @@ const NavBar: React.FC = () => {
     localStorage.clear();
     setUsername(null);
     message.success('Logged out successfully');
+    navigate('/');
   };
 
   return (
@@ -40,7 +43,7 @@ const NavBar: React.FC = () => {
           </Menu.Item>
         </Menu>
       ) : (
-        <LoginForm updateUsername={updateUsername} />
+        <div>Login</div>
       )}
     </>
   );
