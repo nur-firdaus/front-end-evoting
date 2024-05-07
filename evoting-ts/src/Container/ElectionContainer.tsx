@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface Election {
+export interface Election {
     // Define the interface for the Election object
     id: number;
     title: string;

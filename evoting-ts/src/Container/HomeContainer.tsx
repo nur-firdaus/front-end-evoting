@@ -1,7 +1,10 @@
-import React from 'react';
-import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import React, { ReactElement, useState, useEffect  } from 'react'
+import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
 import Login from './LoginContainer';
-import Listing from './ElectionsContainer';
+import Listing from '../Component/ElectionsContainer';
+import { Outlet } from 'react-router-dom';
+import NavBar from './NavBar';
+
 
 const { Header, Content, Footer } = Layout;
 
@@ -10,40 +13,24 @@ const items = new Array(5).fill(null).map((_, index) => ({
   label: `nav ${index + 1}`,
 }));
 
+
 const Home: React.FC = () => {
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
 
+
   return (
     <Layout>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={['2']}
-          items={items}
-          style={{ flex: 1, minWidth: 0 }}
-        />
-      </Header>
+      <NavBar/>
       <Content style={{ padding: '0 48px' }}>
         <Breadcrumb style={{ margin: '16px 0' }}>
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>List</Breadcrumb.Item>
           <Breadcrumb.Item>App</Breadcrumb.Item>
         </Breadcrumb>
-        <div
-          style={{
-            background: colorBgContainer,
-            minHeight: 500,
-            padding: 24,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-          <Login/>
-          <Listing/>
-        </div>
+        <Outlet />
       </Content>
       <Footer style={{ textAlign: 'center' }}>
         Ant Design ©{new Date().getFullYear()} Created by Ant UED
