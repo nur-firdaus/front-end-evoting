@@ -1,7 +1,7 @@
 import React, { ReactElement, useState, useEffect  } from 'react'
 import { Breadcrumb, Button, Layout, Menu, theme } from 'antd';
 import Login from './LoginContainer';
-import Listing from './ElectionsContainer';
+import Listing from './ElectionsRealtimeContainer';
 import { Outlet } from 'react-router-dom';
 import NavBar from './NavBar';
 import LoginForm from './LoginContainer';

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Table } from 'antd';
 import axios from 'axios';
+import VoteChart from './VoteChart';
 
 interface Props {
   visible: boolean;
@@ -79,6 +80,7 @@ const ElectionsDetailContainer: React.FC<Props> = ({ visible, onCancel, content 
       width="90%"
       bodyStyle={{ height: '80vh', overflowY: 'scroll' }}
     >
+    <VoteChart election_id={localStorage.getItem('ElectionId')}/>
       <Table dataSource={content} columns={columns} rowKey="voter_id" />
     </Modal>
   );

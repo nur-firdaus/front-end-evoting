@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Modal } from 'antd';
+import { Table, Modal, Button } from 'antd';
 import axios from 'axios';
 import ElectionsDetailContainer from './ElectionsDetailContainer';
 import ElectionsDetailContainerVoter from './ElectionsDetailContainerVoter';
+import AutoRefreshContainer from './AutoRefreshContainer';
+import VoteChartRealtime from './VoteChartRealtime';
 
 export interface Election {
   election_id: number;
@@ -15,16 +17,17 @@ export interface Election {
   updated_at: string;
 }
 
-const ElectionsContainer: React.FC = () => {
+const ElectionsRealtimeContainer: React.FC = () => {
   const [elections, setElections] = useState<Election[]>([]);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalContent, setModalContent] = useState<any>(null);
+  const [showList, setShowList] = useState<Boolean>(false);
   const [role, setRole] = useState<string | null>(localStorage.getItem('Role'));
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/elections');
+        const response = await axios.get('https://voting.faesoftwaresolution.com/api/elections');
         setElections(response.data);
       } catch (error) {
         console.error('Error fetching elections:', error);
@@ -81,7 +84,7 @@ const ElectionsContainer: React.FC = () => {
 
   const handleElectionDetails = async (election: Election) => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/elections/${election.election_id}/voters`);
+      const response = await axios.get(`https://voting.faesoftwaresolution.com/api/elections/${election.election_id}/voters`);
       setModalContent(response.data);
       localStorage.setItem("ElectionId", election.election_id.toLocaleString());
       setModalVisible(true);
@@ -103,24 +106,28 @@ const ElectionsContainer: React.FC = () => {
   return (
     <>
     <div>
-      <h1>Election List</h1>
+      <h1>Election List Real-Time</h1>
       <Table dataSource={elections} columns={columns} />
-      {role=='Admin'?(
-      <ElectionsDetailContainer
-        visible={modalVisible}
-        onCancel={() => handleOnCancel()}
-        content={modalContent}
-      />
-      ):(
-        <ElectionsDetailContainerVoter
-        visible={modalVisible}
-        onCancel={() => handleOnCancel()}
-        content={modalContent}
-      />
-      )}
+      {modalVisible==true?(<>
+        <Button type="primary" onClick={() => setModalVisible(false)} danger>
+          Close
+        </Button>
+        
+    <VoteChartRealtime election_id={localStorage.getItem('ElectionId')}/>
+        <AutoRefreshContainer electionId={localStorage.getItem('ElectionId')}/></>):(<>
+            {role=='Admin'?(
+             <></>
+              ):(
+                <ElectionsDetailContainerVoter
+                visible={modalVisible}
+                onCancel={() => handleOnCancel()}
+                content={modalContent}
+              />
+        )}
+      </>)}
     </div>
     </>
   );
 };
 
-export default ElectionsContainer;
+export default ElectionsRealtimeContainer;

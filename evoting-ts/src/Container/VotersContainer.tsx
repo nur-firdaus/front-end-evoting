@@ -19,7 +19,7 @@ const VotersContainer: React.FC<{ electionId: string }> = ({ electionId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:8000/api/elections/${electionId}/voters`);
+        const response = await axios.get(`https://voting.faesoftwaresolution.com/api/elections/${electionId}/voters`);
         setVoters(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

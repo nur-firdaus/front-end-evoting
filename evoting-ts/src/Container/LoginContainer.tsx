@@ -10,7 +10,7 @@ const LoginForm: React.FC<{ updateUsername: (name: string) => void }> = ({ updat
   const onFinish = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/admin/login', values);
+      const response = await axios.post('https://voting.faesoftwaresolution.com/api/admin/login', values);
       const userData = response.data;
       Object.keys(userData).forEach(key => {
         localStorage.setItem(key, userData[key]);
@@ -22,13 +22,13 @@ const LoginForm: React.FC<{ updateUsername: (name: string) => void }> = ({ updat
       message.error('Login failed');
     }
     setLoading(false);
-    navigate('/list');
+    navigate('/list-batch');
   };
 
   const onFinishVoter = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/voter/login', values);
+      const response = await axios.post('https://voting.faesoftwaresolution.com/api/voter/login', values);
       const userData = response.data;
       Object.keys(userData).forEach(key => {
         localStorage.setItem(key, userData[key]);
@@ -40,7 +40,7 @@ const LoginForm: React.FC<{ updateUsername: (name: string) => void }> = ({ updat
       message.error('Login failed');
     }
     setLoading(false);
-    navigate('/list');
+    navigate('/list-batch');
   };
   const cardStyle: React.CSSProperties = {
     width: 620,

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Button, message } from 'antd';
+import { Menu, Button, message, Switch } from 'antd';
 import { HomeOutlined, UserOutlined, SettingOutlined } from '@ant-design/icons';
 import LoginForm from './LoginContainer';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ const { SubMenu } = Menu;
 
 const NavBar: React.FC = () => {
   const [username, setUsername] = useState<string | null>(localStorage.getItem('username'));
+  const [realtime, setRealtime] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const updateUsername = (name: string) => {
@@ -21,11 +22,33 @@ const NavBar: React.FC = () => {
     navigate('/');
   };
 
+  const handleCreateElection = () => {
+    navigate('CreateElection')
+  };
+
+  
+  const handleHome = () => {
+    realtime==true?navigate('list-realtime'):navigate('list-batch')
+  };
+
+  const realtimeChange = () => {
+    if(realtime==true){
+      setRealtime(false)
+      localStorage.setItem("realtime", "0");
+      navigate('list-batch')
+    }else{
+      setRealtime(true)
+      localStorage.setItem("realtime", "1");
+      navigate('list-realtime')
+    }
+  };
+
+
   return (
     <>
       {username ? (
         <Menu mode="horizontal">
-          <Menu.Item key="home" icon={<HomeOutlined />}>
+          <Menu.Item key="home" onClick={handleHome} icon={<HomeOutlined />}>
             Home
           </Menu.Item>
           <SubMenu key="sub1" icon={<UserOutlined />} title={`Welcome, ${username}`}>
@@ -33,13 +56,16 @@ const NavBar: React.FC = () => {
             <Menu.Item key="profile:2">Settings</Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<SettingOutlined />} title="Options">
-            <Menu.Item key="options:1">Option 1</Menu.Item>
+            <Menu.Item key="options:1"><Button type="text" onClick={handleCreateElection}>Create Vote</Button></Menu.Item>
             <Menu.Item key="options:2">Option 2</Menu.Item>
           </SubMenu>
           <Menu.Item>
             <Button type="primary" onClick={handleLogout}>
               Logout
             </Button>
+          </Menu.Item>
+          <Menu.Item>
+            Batch <Switch checked={realtime} onChange={realtimeChange} /> Real-time 
           </Menu.Item>
         </Menu>
       ) : (
