@@ -26,6 +26,9 @@ const NavBar: React.FC = () => {
     navigate('CreateElection')
   };
 
+  const handleCreateVoter = () => {
+    navigate('createVoter')
+  };
   
   const handleHome = () => {
     realtime==true?navigate('list-realtime'):navigate('list-batch')
@@ -56,8 +59,8 @@ const NavBar: React.FC = () => {
             <Menu.Item key="profile:2">Settings</Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<SettingOutlined />} title="Options">
-            <Menu.Item key="options:1"><Button type="text" onClick={handleCreateElection}>Create Vote</Button></Menu.Item>
-            <Menu.Item key="options:2">Option 2</Menu.Item>
+            <Menu.Item key="options:1"><Button type="text" onClick={handleCreateElection}>Create Election</Button></Menu.Item>
+            <Menu.Item key="options:1"><Button type="text" onClick={handleCreateVoter}>Create Voter</Button></Menu.Item>
           </SubMenu>
           <Menu.Item>
             <Button type="primary" onClick={handleLogout}>

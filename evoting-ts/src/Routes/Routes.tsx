@@ -6,6 +6,7 @@ import LoginForm from "../Container/LoginContainer";
 import ElectionFormContainer from "../Container/ElectionFormContainer";
 import ElectionsRealtimeContainer from "../Container/ElectionsRealtimeContainer";
 import ElectionsBatchContainer from "../Container/ElectionsBatchContainer";
+import VoterFormContainer from "../Container/VoterFormContainer";
 
 export const router = createBrowserRouter([
     {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
         { path: "list-batch", element: <ElectionsBatchContainer /> },
         { path: "CreateElection", element: <ElectionFormContainer /> },
         { path: "list-realtime", element: <ElectionsRealtimeContainer /> },
+        { path: "createVoter", element: <VoterFormContainer /> },
     
       ],
     },

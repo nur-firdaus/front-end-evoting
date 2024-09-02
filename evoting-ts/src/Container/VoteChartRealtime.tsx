@@ -3,7 +3,7 @@ import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 interface VoteData {
-    candidate_id: number;
+    full_name: String;
     vote_count: number;
 }
 
@@ -48,7 +48,7 @@ const VoteChartRealtime: React.FC<VoteChartProps> = ({ election_id }) => {
         <ResponsiveContainer width="100%" height={400}>
             <BarChart data={voteData}>
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="candidate_id" />
+                <XAxis dataKey="full_name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
