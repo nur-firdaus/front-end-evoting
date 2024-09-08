@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button, message, Row, Col, Flex, Card, Typography } from 'antd';
 import axios from 'axios';
 import { useNavigate  } from 'react-router-dom';
+import GameComponent from './GameComponent';
 
 const LoginForm: React.FC<{ updateUsername: (name: string) => void }> = ({ updateUsername }) => {
   const [loading, setLoading] = useState(false);
@@ -52,6 +53,7 @@ const LoginForm: React.FC<{ updateUsername: (name: string) => void }> = ({ updat
   };
   return (
     <>
+      <GameComponent/>
       <Row justify="center" align="middle" style={{ minHeight: '100vh' }}>
           <Col span={12}>
             <Card hoverable style={cardStyle} styles={{ body: { padding: 0, overflow: 'hidden' } }}>
